@@ -1,0 +1,49 @@
+name: Github actions
+on: [push]
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "✨ Starting test sequence"
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install --save-dev
+
+      - name: Run unit tests
+        run: npm run test
+      - run: echo "🚦 Test sequence terminated"
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "✨ Starting lint sequence"
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install --save-dev
+
+      - name: Run linter
+        run: npm run lint
+      - run: echo "🚦 Lint sequence terminated"
+
+  is-mergeable:
+    runs-on: ubuntu-latest
+    if: always()
+    needs: [unit-tests, lint]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Exits with 1 if one job failed
+        if: needs.unit-tests.result != 'success' || needs.lint.result != 'success'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.setFailed('Some jobs have failed: unable to merge this PR.')
+
+      - name: Exits with 0 if every job are ok
+        run: |
+          echo 'Everything ok'
