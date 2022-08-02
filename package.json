@@ -7,11 +7,12 @@
   "files": [
     "build/src"
   ],
-  "license": "Apache-2.0",
   "keywords": [],
   "scripts": {
     "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s . -o ./build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:w": "jest --watch --runInBand"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.3.0",

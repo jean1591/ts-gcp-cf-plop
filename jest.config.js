@@ -1,8 +1,3 @@
-// For a detailed explanation regarding each configuration property, visit:
-// https://jestjs.io/docs/en/configuration.html
-const { pathsToModuleNameMapper } = require('ts-jest');
-const { compilerOptions } = require('./tsconfig.paths.json');
-
 module.exports = {
   clearMocks: true,
   preset: 'ts-jest/presets/js-with-ts',
@@ -12,9 +7,6 @@ module.exports = {
     '^.+\\.ts$': 'ts-jest',
   },
   watchPathIgnorePatterns: ['/node_modules/'],
-  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
-    prefix: '<rootDir>/',
-  }),
   collectCoverageFrom: [
     'src/functions/**/*.ts',
     '!src/functions/**/config.ts',
@@ -22,4 +14,8 @@ module.exports = {
     '!src/libs/config/logger.config.ts',
   ],
   transformIgnorePatterns: ['/node_modules/'],
+  moduleNameMapper: {
+    '@functions/(.*)': '<rootDir>/src/functions/$1',
+    '@libs/(.*)': '<rootDir>/src/libs/$1',
+  },
 };

@@ -16,6 +16,7 @@ To make the project fully functionnal, you'll need the following elements from G
 1. A GCP service account ([see the docs](https://cloud.google.com/iam/docs/service-accounts))
 1. A GCP project id ([see the docs](https://cloud.google.com/resource-manager/docs/creating-managing-projects))
 1. Enable the requested GCP APIs (such as Cloud Function)
+1. Run `npm i` to install all packages
 
 ### ⚙️ Development
 
